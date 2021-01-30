@@ -27,6 +27,7 @@ void writeAllConfig()
   if (eepromWritesPending == false) { writeConfig(wmiMapPage); }
   if (eepromWritesPending == false) { writeConfig(progOutsPage); }
   if (eepromWritesPending == false) { writeConfig(ignMap2Page); }
+  if (eepromWritesPending == false) { writeConfig(itbLoadPage); } //ITB CHANGES 
 }
 
 
