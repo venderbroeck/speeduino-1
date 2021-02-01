@@ -1241,22 +1241,9 @@ uint16_t PW(int REQ_FUEL, byte VE, long MAP, uint16_t corrections, int injOpen)
 byte getVE1()
 {
   byte tempVE = 100;
-  if (configPage2.fuelAlgorithm == LOAD_SOURCE_MAP) //Check which fuelling algorithm is being used
-  {
-    //Speed Density
-    currentStatus.fuelLoad = currentStatus.MAP;
-  }
-  else if (configPage2.fuelAlgorithm == LOAD_SOURCE_TPS)
-  {
-    //Alpha-N
-    currentStatus.fuelLoad = currentStatus.TPS;
-  }
-  else if (configPage2.fuelAlgorithm == LOAD_SOURCE_IMAPEMAP)
-  {
-    //IMAP / EMAP
-    currentStatus.fuelLoad = (currentStatus.MAP * 100) / currentStatus.EMAP;
-  }
-  else { currentStatus.fuelLoad = currentStatus.MAP; } //Fallback position
+
+  currentStatus.fuelLoad = getLoad(configPage2.fuelAlgorithm);
+
   tempVE = get3DTableValue(&fuelTable, currentStatus.fuelLoad, currentStatus.RPM); //Perform lookup into fuel map for RPM vs MAP value
 
   return tempVE;
@@ -1269,27 +1256,34 @@ byte getVE1()
  */
 byte getAdvance1()
 {
-  byte tempAdvance = 0;
-  if (configPage2.ignAlgorithm == LOAD_SOURCE_MAP) //Check which fuelling algorithm is being used
-  {
-    //Speed Density
-    currentStatus.ignLoad = currentStatus.MAP;
-  }
-  else if(configPage2.ignAlgorithm == LOAD_SOURCE_TPS)
-  {
-    //Alpha-N
-    currentStatus.ignLoad = currentStatus.TPS;
+  byte tempAdvance = 0; 
 
-  }
-  else if (configPage2.fuelAlgorithm == LOAD_SOURCE_IMAPEMAP)
-  {
-    //IMAP / EMAP
-    currentStatus.ignLoad = (currentStatus.MAP * 100) / currentStatus.EMAP;
-  }
+  currentStatus.ignLoad = getLoad(configPage2.ignAlgorithm); //this fixes bug in original code: fuelalgorithm used for imap/emap instead of ignalgorithm & fallback
+
   tempAdvance = get3DTableValue(&ignitionTable, currentStatus.ignLoad, currentStatus.RPM) - OFFSET_IGNITION; //As above, but for ignition advance
   tempAdvance = correctionsIgn(tempAdvance);
 
   return tempAdvance;
+}
+
+int16_t getLoad(int algorithm) 
+{
+    if (algorithm == LOAD_SOURCE_MAP) //Check which fuelling algorithm is being used
+  {
+    //Speed Density
+    return currentStatus.MAP;
+  }
+  else if (algorithm == LOAD_SOURCE_TPS)
+  {
+    //Alpha-N
+    return = currentStatus.TPS;
+  }
+  else if (algorithm == LOAD_SOURCE_IMAPEMAP)
+  {
+    //IMAP / EMAP
+    return (currentStatus.MAP * 100) / currentStatus.EMAP;
+  }
+  else {return currentStatus.MAP; } //Fallback position
 }
 
 uint16_t calculateInjectorStartAngle(uint16_t PWdivTimerPerDegree, int16_t injChannelDegrees)

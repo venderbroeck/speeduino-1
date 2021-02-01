@@ -199,6 +199,19 @@ void initialiseAll()
     wmiAdvTable.values = configPage10.wmiAdvAdj;
     wmiAdvTable.axisX = configPage10.wmiAdvBins;
 
+    //ITB CHANGES
+    itbTpsTable.valueSize = SIZE_BYTE;
+    itbTpsTable.axisSize = SIZE_BYTE;
+    itbTpsTable.xSize = 12;
+    itbTpsTable.values = configPage15.itbTpsValues;
+    itbTpsTable.axisX = configPage15.itbRpmBins;
+
+    itbLoadTable.valueSize = SIZE_BYTE;
+    itbLoadTable.axisSize = SIZE_BYTE;
+    itbLoadTable.xSize = 12;
+    itbLoadTable.values = configPage15.itbLoadValues;
+    itbLoadTable.axisX = configPage15.itbRpmBins;    
+
     cltCalibrationTable.valueSize = SIZE_INT;
     cltCalibrationTable.axisSize = SIZE_INT;
     cltCalibrationTable.xSize = 32;

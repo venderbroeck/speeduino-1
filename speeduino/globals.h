@@ -118,6 +118,7 @@
 #define LOAD_SOURCE_MAP         0
 #define LOAD_SOURCE_TPS         1
 #define LOAD_SOURCE_IMAPEMAP    2
+#define LOAD_SOURCE_ITBLOAD     3 //ITB CHANGES
 
 //Define bit positions within engine virable
 #define BIT_ENGINE_RUN      0   // Engine running
@@ -393,6 +394,8 @@ extern struct table2D knockWindowStartTable;
 extern struct table2D knockWindowDurationTable;
 extern struct table2D oilPressureProtectTable;
 extern struct table2D wmiAdvTable; //6 bin wmi correction table for timing advance (2D)
+extern struct table2D itbTpsTable; //ITB CHANGES - 12 bin table with tps switchpoints for switching between SD & AN
+extern struct table2D itbLoadTable; //12 bin table with %load values at tps switchpoints
 
 //These are for the direct port manipulation of the injectors, coils and aux outputs
 extern volatile PORT_TYPE *inj1_pin_port;
@@ -1282,6 +1285,23 @@ struct config13 {
   } __attribute__((__packed__)); //The 32 bit systems require all structs to be fully packed
 #endif
 
+/* ITB CHANGES
+Page 15 - ITB related tables and settings
+38 bytes long
+*/
+struct config15 {
+  byte itbRpmBins[12];
+  byte itbTpsValues[12];
+  byte itbLoadValues[12];
+  byte itbBaroSwitchPoint;
+  byte itbIdleTpsThreshold;
+
+#if defined(CORE_AVR)
+  };
+#else
+  } __attribute__((__packed__)); //The 32 bit systems require all structs to be fully packed
+#endif
+
 extern byte pinInjector1; //Output pin injector 1
 extern byte pinInjector2; //Output pin injector 2
 extern byte pinInjector3; //Output pin injector 3
@@ -1374,6 +1394,7 @@ extern struct config6 configPage6;
 extern struct config9 configPage9;
 extern struct config10 configPage10;
 extern struct config13 configPage13;
+extern struct config15 configPage15; //ITB CHANGES
 //extern byte cltCalibrationTable[CALIBRATION_TABLE_SIZE]; /**< An array containing the coolant sensor calibration values */
 //extern byte iatCalibrationTable[CALIBRATION_TABLE_SIZE]; /**< An array containing the inlet air temperature sensor calibration values */
 //extern byte o2CalibrationTable[CALIBRATION_TABLE_SIZE]; /**< An array containing the O2 sensor calibration values */
@@ -1394,4 +1415,5 @@ static_assert(sizeof(struct config6) == 128, "configPage6 size is not 128");
 static_assert(sizeof(struct config9) == 192, "configPage9 size is not 192");
 static_assert(sizeof(struct config10) == 192, "configPage10 size is not 192");
 static_assert(sizeof(struct config13) == 128, "configPage13 size is not 128");
+static_assert(sizeof(struct config15) == 38, "configPage13 size is not 38");
 #endif // GLOBALS_H

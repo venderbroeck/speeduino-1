@@ -30,7 +30,6 @@ void writeAllConfig()
   if (eepromWritesPending == false) { writeConfig(itbLoadPage); } //ITB CHANGES 
 }
 
-
 /*
 Takes the current configuration (config pages and maps)
 and writes them to EEPROM as per the layout defined in storage.h
@@ -458,7 +457,7 @@ void writeConfig(byte tableNum)
 
       break;
       
-  case progOutsPage:
+    case progOutsPage:
       /*---------------------------------------------------
       | Config page 13 (See storage.h for data layout)
       -----------------------------------------------------*/
@@ -511,6 +510,24 @@ void writeConfig(byte tableNum)
 
       break;
 
+    case itbLoadPage:
+      /*---------------------------------------------------
+      | Config page 15 (See storage.h for data layout)
+      | 38 byte long config table
+      -----------------------------------------------------*/
+      pnt_configPage = (byte *)&configPage15; //Create a pointer to Page 11 in memory
+      //As there are no 3d tables in this page, all 192 bytes can simply be read in
+      for(int x=EEPROM_CONFIG15_START; x<EEPROM_CONFIG15_END; x++)
+      {
+        if( (writeCounter > EEPROM_MAX_WRITE_BLOCK) ) { break; } //This is a safety check to make sure we don't attempt to write too much to the EEPROM at a time.
+        if(EEPROM.read(x) != *(pnt_configPage + byte(x - EEPROM_CONFIG15_START))) { EEPROM.write(x, *(pnt_configPage + byte(x - EEPROM_CONFIG15_START))); writeCounter++; }
+      }
+
+      if(writeCounter > EEPROM_MAX_WRITE_BLOCK) { eepromWritesPending = true; }
+      else { eepromWritesPending = false; }
+
+      break;
+
     default:
       break;
   }
@@ -525,6 +542,7 @@ void resetConfigPages()
   memset(&configPage9, 0, sizeof(config9));
   memset(&configPage10, 0, sizeof(config10));
   memset(&configPage13, 0, sizeof(config13));
+  memset(&configPage15, 0, sizeof(config15));
 }
 
 void loadConfig()
@@ -810,8 +828,16 @@ void loadConfig()
   }
 
   //*********************************************************************************************************************************************************************************
+  //CONFIG PAGE (15)
+  pnt_configPage = (byte *)&configPage15; //Create a pointer to Page 15 in memory
+  //All bytes can simply be pulled straight from the configTable
+  for(int x=EEPROM_CONFIG15_START; x<EEPROM_CONFIG15_END; x++)
+  {
+    *(pnt_configPage + byte(x - EEPROM_CONFIG15_START)) = EEPROM.read(x);
+  }
 
-
+  //*********************************************************************************************************************************************************************************
+  
 }
 
 /*

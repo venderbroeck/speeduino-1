@@ -171,19 +171,9 @@ Current layout of EEPROM data (Version 3) is as follows (All sizes are in bytes)
 #define EEPROM_CONFIG14_YBINS 2870
 #define EEPROM_CONFIG14_END   2886
 
-#define EEPROM_CONFIG15_XSIZE 2887 //ITB load TPS swithspoints
-#define EEPROM_CONFIG15_YSIZE 2888 
-#define EEPROM_CONFIG15_MAP   2889
-#define EEPROM_CONFIG15_XBINS 2901
-#define EEPROM_CONFIG15_YBINS 2913
+#define EEPROM_CONFIG15_START 2887 //ITB CHANGES - page 15 itb settings
 #define EEPROM_CONFIG15_END   2925
 
-#define EEPROM_CONFIG16_XSIZE 2925 //ITB load at TPS switchpoint
-#define EEPROM_CONFIG16_YSIZE 2926
-#define EEPROM_CONFIG16_MAP   2927
-#define EEPROM_CONFIG16_XBINS 2939
-#define EEPROM_CONFIG16_YBINS 29
-#define EEPROM_CONFIG16_END   2952
 
 
 //Calibration data is stored at the end of the EEPROM (This is in case any further calibration tables are needed as they are large blocks)
