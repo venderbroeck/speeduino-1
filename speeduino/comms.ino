@@ -1424,6 +1424,10 @@ void sendPage()
       currentTable = ignitionTable2;
       break;
 
+    case itbLoadPage:
+       pnt_configPage = &configPage15; //Create a pointer to page 15 in memory
+       break;
+
     default:
     #ifndef SMALL_FLASH_MODE
         Serial.println(F("\nPage has not been implemented yet"));

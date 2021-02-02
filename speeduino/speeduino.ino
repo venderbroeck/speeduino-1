@@ -38,6 +38,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "utilities.h"
 #include "engineProtection.h"
 #include "secondaryTables.h"
+#include "calculations.h"
 #include BOARD_H //Note that this is not a real file, it is defined in globals.h. 
 
 int ignition1StartAngle = 0;
@@ -1264,26 +1265,6 @@ byte getAdvance1()
   tempAdvance = correctionsIgn(tempAdvance);
 
   return tempAdvance;
-}
-
-int16_t getLoad(int algorithm) 
-{
-    if (algorithm == LOAD_SOURCE_MAP) //Check which fuelling algorithm is being used
-  {
-    //Speed Density
-    return currentStatus.MAP;
-  }
-  else if (algorithm == LOAD_SOURCE_TPS)
-  {
-    //Alpha-N
-    return = currentStatus.TPS;
-  }
-  else if (algorithm == LOAD_SOURCE_IMAPEMAP)
-  {
-    //IMAP / EMAP
-    return (currentStatus.MAP * 100) / currentStatus.EMAP;
-  }
-  else {return currentStatus.MAP; } //Fallback position
 }
 
 uint16_t calculateInjectorStartAngle(uint16_t PWdivTimerPerDegree, int16_t injChannelDegrees)

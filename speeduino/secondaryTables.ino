@@ -1,6 +1,7 @@
 #include "globals.h"
 #include "secondaryTables.h"
 #include "corrections.h"
+#include "calculations.h"
 
 void calculateSecondaryFuel()
 {
@@ -160,22 +161,7 @@ void calculateSecondarySpark()
 byte getVE2()
 {
   byte tempVE = 100;
-  if( configPage10.fuel2Algorithm == LOAD_SOURCE_MAP)
-  {
-    //Speed Density
-    currentStatus.fuelLoad2 = currentStatus.MAP;
-  }
-  else if (configPage10.fuel2Algorithm == LOAD_SOURCE_TPS)
-  {
-    //Alpha-N
-    currentStatus.fuelLoad2 = currentStatus.TPS;
-  }
-  else if (configPage10.fuel2Algorithm == LOAD_SOURCE_IMAPEMAP)
-  {
-    //IMAP / EMAP
-    currentStatus.fuelLoad2 = (currentStatus.MAP * 100) / currentStatus.EMAP;
-  }
-  else { currentStatus.fuelLoad2 = currentStatus.MAP; } //Fallback position
+  currentStatus.fuelLoad2 = getLoad(configPage10.fuel2Algorithm);
   tempVE = get3DTableValue(&fuelTable2, currentStatus.fuelLoad2, currentStatus.RPM); //Perform lookup into fuel map for RPM vs MAP value
 
   return tempVE;
@@ -189,22 +175,7 @@ byte getVE2()
 byte getAdvance2()
 {
   byte tempAdvance = 0;
-  if (configPage2.ignAlgorithm == LOAD_SOURCE_MAP) //Check which fuelling algorithm is being used
-  {
-    //Speed Density
-    currentStatus.ignLoad = currentStatus.MAP;
-  }
-  else if(configPage2.ignAlgorithm == LOAD_SOURCE_TPS)
-  {
-    //Alpha-N
-    currentStatus.ignLoad = currentStatus.TPS;
-
-  }
-  else if (configPage2.fuelAlgorithm == LOAD_SOURCE_IMAPEMAP)
-  {
-    //IMAP / EMAP
-    currentStatus.ignLoad = (currentStatus.MAP * 100) / currentStatus.EMAP;
-  }
+  currentStatus.ignLoad = getLoad(configPage2.ignAlgorithm);
   tempAdvance = get3DTableValue(&ignitionTable2, currentStatus.ignLoad, currentStatus.RPM) - OFFSET_IGNITION; //As above, but for ignition advance
   tempAdvance = correctionsIgn(tempAdvance);
 

@@ -1,0 +1,1 @@
+int16_t getLoad(int algorithm) 
