@@ -24,8 +24,8 @@ int16_t getLoad(int algorithm)
   }
   else if (algorithm == LOAD_SOURCE_ITBLOAD) {   
 
-    itbLoadTpsSwitchPoint = table2D_getValue(&itbTpsTable, currentStatus.RPM); //TPS value at MAP switchpoint for AN mode
-    itbLoadAtTpsSwitchPoint = table2D_getValue(&itbLoadTable, currentStatus.RPM); //devision line for the ve map defining SD and AN areas
+    itbLoadTpsSwitchPoint = table2D_getValue(&itbLoadTpsSwitchPointsTable, currentStatus.RPM); //TPS value at MAP switchpoint for AN mode
+    itbLoadAtTpsSwitchPoint = table2D_getValue(&itbLoadAtTpsSwitchPointTable, currentStatus.RPM); //devision line for the ve map defining SD and AN areas
     uint16_t load = 0;
     
     //AN mode. Uses the area of the map above the itbLoadAtTpsSwitchpoint line
