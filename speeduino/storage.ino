@@ -27,7 +27,7 @@ void writeAllConfig()
   if (eepromWritesPending == false) { writeConfig(wmiMapPage); }
   if (eepromWritesPending == false) { writeConfig(progOutsPage); }
   if (eepromWritesPending == false) { writeConfig(ignMap2Page); }
-  if (eepromWritesPending == false) { writeConfig(itbLoadPage); } //ITB CHANGES 
+  if (eepromWritesPending == false) { writeConfig(itbLoadPage); }
 }
 
 /*
@@ -515,8 +515,8 @@ void writeConfig(byte tableNum)
       | Config page 15 (See storage.h for data layout)
       | 38 byte long config table
       -----------------------------------------------------*/
-      pnt_configPage = (byte *)&configPage15; //Create a pointer to Page 11 in memory
-      //As there are no 3d tables in this page, all 192 bytes can simply be read in
+      pnt_configPage = (byte *)&configPage15; //Create a pointer to Page 15 in memory
+      //As there are no 3d tables in this page, all 38 bytes can simply be read in
       for(int x=EEPROM_CONFIG15_START; x<EEPROM_CONFIG15_END; x++)
       {
         if( (writeCounter > EEPROM_MAX_WRITE_BLOCK) ) { break; } //This is a safety check to make sure we don't attempt to write too much to the EEPROM at a time.

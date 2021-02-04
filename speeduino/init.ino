@@ -198,16 +198,15 @@ void initialiseAll()
     wmiAdvTable.xSize = 6;
     wmiAdvTable.values = configPage10.wmiAdvAdj;
     wmiAdvTable.axisX = configPage10.wmiAdvBins;
-
-    //ITB CHANGES
+    
     itbLoadTpsSwitchPointsTable.valueSize = SIZE_BYTE;
-    itbLoadTpsSwitchPointsTable.axisSize = SIZE_BYTE;
+    itbLoadTpsSwitchPointsTable.axisSize = SIZE_BYTE; //Set this table to use byte axis bins
     itbLoadTpsSwitchPointsTable.xSize = 12;
     itbLoadTpsSwitchPointsTable.values = configPage15.itbTpsValues;
     itbLoadTpsSwitchPointsTable.axisX = configPage15.itbRpmBins;
 
     itbLoadAtTpsSwitchPointTable.valueSize = SIZE_BYTE;
-    itbLoadAtTpsSwitchPointTable.axisSize = SIZE_BYTE;
+    itbLoadAtTpsSwitchPointTable.axisSize = SIZE_BYTE; //Set this table to use byte axis bins
     itbLoadAtTpsSwitchPointTable.xSize = 12;
     itbLoadAtTpsSwitchPointTable.values = configPage15.itbLoadValues;
     itbLoadAtTpsSwitchPointTable.axisX = configPage15.itbRpmBins;    

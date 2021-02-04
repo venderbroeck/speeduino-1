@@ -118,7 +118,7 @@
 #define LOAD_SOURCE_MAP         0
 #define LOAD_SOURCE_TPS         1
 #define LOAD_SOURCE_IMAPEMAP    2
-#define LOAD_SOURCE_ITBLOAD     3 //ITB CHANGES
+#define LOAD_SOURCE_ITBLOAD     3
 
 //Define bit positions within engine virable
 #define BIT_ENGINE_RUN      0   // Engine running
@@ -394,7 +394,7 @@ extern struct table2D knockWindowStartTable;
 extern struct table2D knockWindowDurationTable;
 extern struct table2D oilPressureProtectTable;
 extern struct table2D wmiAdvTable; //6 bin wmi correction table for timing advance (2D)
-extern struct table2D itbLoadTpsSwitchPointsTable; //ITB CHANGES - 12 bin table with tps switchpoints for switching between SD & AN
+extern struct table2D itbLoadTpsSwitchPointsTable;  //12 bin table with tps switchpoints for switching between SD & AN
 extern struct table2D itbLoadAtTpsSwitchPointTable; //12 bin table with %load values at tps switchpoints
 
 //These are for the direct port manipulation of the injectors, coils and aux outputs
@@ -1285,7 +1285,7 @@ struct config13 {
   } __attribute__((__packed__)); //The 32 bit systems require all structs to be fully packed
 #endif
 
-/* ITB CHANGES
+/*
 Page 15 - ITB related tables and settings
 38 bytes long
 */
@@ -1394,7 +1394,7 @@ extern struct config6 configPage6;
 extern struct config9 configPage9;
 extern struct config10 configPage10;
 extern struct config13 configPage13;
-extern struct config15 configPage15; //ITB CHANGES
+extern struct config15 configPage15;
 //extern byte cltCalibrationTable[CALIBRATION_TABLE_SIZE]; /**< An array containing the coolant sensor calibration values */
 //extern byte iatCalibrationTable[CALIBRATION_TABLE_SIZE]; /**< An array containing the inlet air temperature sensor calibration values */
 //extern byte o2CalibrationTable[CALIBRATION_TABLE_SIZE]; /**< An array containing the O2 sensor calibration values */

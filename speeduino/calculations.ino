@@ -41,8 +41,6 @@ int16_t getLoad(int algorithm)
         load = currentStatus.MAP * itbLoadAtTpsSwitchPoint;
         return load / configPage15.itbBaroSwitchPoint;
     }
-    //also add crc routines for new page with maps
-    return currentStatus.MAP; // placeholder
   }
   else {return currentStatus.MAP; } //Fallback to Speed Density
 }

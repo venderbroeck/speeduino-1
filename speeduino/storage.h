@@ -76,6 +76,7 @@ Current layout of EEPROM data (Version 3) is as follows (All sizes are in bytes)
 | 2387  |64   | WMI Map (8x8)                       |
 | 2451  |8    | WMI Table RPM bins                  |
 | 2459  |8    | WMI Table TPS bins                  |
+| 2887  |38   | Page 15 ITB load settings           |
 |                                                   |
 | 2514  |44   | Table CRC32 values. Last table first|
 | 2558  |1    | Last recorded Baro value            |
@@ -170,8 +171,7 @@ Current layout of EEPROM data (Version 3) is as follows (All sizes are in bytes)
 #define EEPROM_CONFIG14_XBINS 2854
 #define EEPROM_CONFIG14_YBINS 2870
 #define EEPROM_CONFIG14_END   2886
-
-#define EEPROM_CONFIG15_START 2887 //ITB CHANGES - page 15 itb settings
+#define EEPROM_CONFIG15_START 2887 // page 15 itb settings
 #define EEPROM_CONFIG15_END   2925
 
 

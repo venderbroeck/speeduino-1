@@ -43,7 +43,7 @@ struct table2D knockWindowStartTable;
 struct table2D knockWindowDurationTable;
 struct table2D oilPressureProtectTable;
 struct table2D wmiAdvTable; //6 bin wmi correction table for timing advance (2D)
-struct table2D itbLoadTpsSwitchPointsTable; //ITB CHANGES - 12 bin table with tps switchpoints for switching between SD & AN
+struct table2D itbLoadTpsSwitchPointsTable;  //12 bin table with tps switchpoints for switching between SD & AN
 struct table2D itbLoadAtTpsSwitchPointTable; //12 bin table with %load values at tps switchpoints
 
 

@@ -24,7 +24,7 @@
 #define wmiMapPage   12
 #define progOutsPage 13
 #define ignMap2Page  14
-#define itbLoadPage  15 //ITB CHANGES - ITB load config page
+#define itbLoadPage  15 // ITB load config page
 
 //Hardcoded TunerStudio addresses/commands for various SD/RTC commands
 #define SD_READWRITE_PAGE   0x11
