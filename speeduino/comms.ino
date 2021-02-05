@@ -2015,6 +2015,11 @@ byte getPageValue(byte page, uint16_t valueAddress)
         else if(valueAddress < 272) { returnValue =  byte(ignitionTable2.axisX[(valueAddress - 256)] / TABLE_RPM_MULTIPLIER); }  //RPM Bins for VE table (Need to be dvidied by 100)
         else if (valueAddress < 288) { returnValue = byte(ignitionTable2.axisY[15 - (valueAddress - 272)] / TABLE_LOAD_MULTIPLIER); } //MAP or TPS bins for VE table
         break;
+
+    case itbLoadPage:
+        pnt_configPage = &configPage15; //Create a pointer to Page 11 in memory
+        returnValue = *((byte *)pnt_configPage + valueAddress);
+        break;
       
     default:
     #ifndef SMALL_FLASH_MODE

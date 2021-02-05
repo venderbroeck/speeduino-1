@@ -205,9 +205,15 @@ uint32_t calculateCRC32(byte pageNo)
       CRC32_val = ~CRC32_val;
       break;
 
+    case itbLoadPage:
+      //Confirmed working
+      pnt_configPage = &configPage15; //Create a pointer to Page 15 in memory
+      CRC32_val = CRC32.crc32((byte *)pnt_configPage, sizeof(configPage15) );
+      break;
+
     default:
       CRC32_val = 0;
-      break;
+      break;    
   }
   
   return CRC32_val;
