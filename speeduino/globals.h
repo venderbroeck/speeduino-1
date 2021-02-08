@@ -890,7 +890,13 @@ struct config4 {
 
   byte engineProtectMaxRPM;
 
-  byte unused4_120[7];
+  byte autoStartInputPin : 6;
+  byte autoStartEnabled : 1;
+  byte autoStartOutputPin : 6;
+  byte autoStartMaxDuration: 6;
+  
+
+  byte unused4_120[4];
 
 #if defined(CORE_AVR)
   };
@@ -1381,6 +1387,8 @@ extern byte pinWMIIndicator; // No water indicator bulb
 extern byte pinWMIEnabled; // ON-OFF ouput to relay/pump/solenoid 
 extern byte pinMC33810_1_CS;
 extern byte pinMC33810_2_CS;
+extern byte pinAutoStartInput;
+extern byte pinAutoStartOutput;
 #ifdef USE_SPI_EEPROM
   extern byte pinSPIFlash_CS;
 #endif
