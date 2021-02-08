@@ -213,7 +213,7 @@ uint32_t calculateCRC32(byte pageNo)
 
     default:
       CRC32_val = 0;
-      break;    
+      break;
   }
   
   return CRC32_val;
