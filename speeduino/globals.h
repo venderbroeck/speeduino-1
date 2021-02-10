@@ -640,6 +640,7 @@ struct statuses {
   byte vvt2Duty;
   byte outputsStatus;
   byte TS_SD_Status; //TunerStudios SD card status
+  byte autoStartStatus; //status & counter for the autostart function. 0 = inactive, 1= button down, 2= active & counting for max duration
 };
 
 /**

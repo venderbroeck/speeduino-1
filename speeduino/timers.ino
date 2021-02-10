@@ -153,7 +153,7 @@ void oneMSInterval() //Most ARM chips can simply call a function
   if (loopSec == 1000)
   {
     loopSec = 0; //Reset counter.
-    BIT_SET(TIMER_mask, BIT_TIMER_1HZ);
+    BIT_SET(TIMER_mask, BIT_TIMER_1HZ);                
 
     dwellLimit_uS = (1000 * configPage4.dwellLimit); //Update uS value incase setting has changed
     currentStatus.crankRPM = ((unsigned int)configPage4.crankRPM * 10);
@@ -259,6 +259,18 @@ void oneMSInterval() //Most ARM chips can simply call a function
       if(BIT_CHECK(HWTest_IGN_50pc, IGN6_CMD_BIT)) { coil6Toggle(); }
       if(BIT_CHECK(HWTest_IGN_50pc, IGN7_CMD_BIT)) { coil7Toggle(); }
       if(BIT_CHECK(HWTest_IGN_50pc, IGN8_CMD_BIT)) { coil8Toggle(); }
+    }
+
+    //****************************************************************************************************************************************************
+    //Increment autostart timer if autostart is running
+    if (configPage4.autoStartEnabled > 0) {
+      if (currentStatus.autoStartStatus > 1) {
+        currentStatus.autoStartStatus++;
+      }
+      if (currentStatus.autoStartStatus > configPage4.autoStartMaxDuration + 2) {
+        digitalWrite(pinAutoStartOutput, HIGH); //max autostart duration reached so disable start motor relay
+        currentStatus.autoStartStatus = 0;
+      }   
     }
 
   }

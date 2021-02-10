@@ -394,6 +394,12 @@ void loop()
           {
             BIT_CLEAR(currentStatus.engine, BIT_ENGINE_CRANK);
             if(configPage4.ignBypassEnabled > 0) { digitalWrite(pinIgnBypass, HIGH); }
+            
+            if(configPage4.autoStartEnabled > 0) 
+            {
+              digitalWrite(pinAutoStartOutput, HIGH); //disable the starter motor relay
+              currentStatus.autoStartStatus = 0; //reset the autostart status
+            }
           }
         }
         else
@@ -406,6 +412,15 @@ void loop()
 
           //Check whether the user has selected to disable to the fan during cranking
           if(configPage2.fanWhenCranking == 0) { FAN_OFF(); }
+
+          //Abort auto starting if button is pressed again.
+          if (configPage4.autoStartEnabled > 0 && currentStatus.autoStartStatus > 1) {
+            if (currentStatus.autoStartStatus > 2 && !digitalRead(pinAutoStartInput)) {
+              digitalWrite(pinAutoStartOutput, HIGH); //disable the starte motor relay
+              currentStatus.autoStartStatus = 0; //reset the autostart function
+            }
+
+          }
         }
       //END SETTING STATUSES
       //-----------------------------------------------------------------------------------------------------
@@ -1156,10 +1171,23 @@ void loop()
         BIT_SET(currentStatus.status3, BIT_STATUS3_RESET_PREVENT);
       }
     } //Has sync and RPM
-    else if ( (BIT_CHECK(currentStatus.status3, BIT_STATUS3_RESET_PREVENT) > 0) && (resetControl == RESET_CONTROL_PREVENT_WHEN_RUNNING) )
+    else 
     {
-      digitalWrite(pinResetControl, LOW);
-      BIT_CLEAR(currentStatus.status3, BIT_STATUS3_RESET_PREVENT);
+      if ( (BIT_CHECK(currentStatus.status3, BIT_STATUS3_RESET_PREVENT) > 0) && (resetControl == RESET_CONTROL_PREVENT_WHEN_RUNNING) ) 
+      {
+        digitalWrite(pinResetControl, LOW);
+        BIT_CLEAR(currentStatus.status3, BIT_STATUS3_RESET_PREVENT);
+      }     
+
+      if (configPage4.autoStartEnabled > 0) {
+        if (currentStatus.autoStartStatus == 0 && !digitalRead(pinAutoStartInput)) {
+          currentStatus.autoStartStatus++; //set to button down
+        }
+        if (currentStatus.autoStartStatus == 1 && digitalRead(pinAutoStartInput)) {
+          currentStatus.autoStartStatus++; //set to starting (autostarting is triggered at button up)
+          digitalWrite(pinAutoStartOutput, LOW); //activate starter motor relay
+        }
+      }
     }
 } //loop()
 #endif //Unit test guard
