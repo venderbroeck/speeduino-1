@@ -894,10 +894,10 @@ struct config4 {
   byte autoStartInputPin : 6;
   byte autoStartEnabled : 1;
   byte autoStartOutputPin : 6;
-  byte autoStartMaxDuration: 6;
+  byte autoStartMaxDuration;
   
 
-  byte unused4_120[4];
+  byte unused4_123[4];
 
 #if defined(CORE_AVR)
   };
